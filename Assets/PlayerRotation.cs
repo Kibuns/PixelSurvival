@@ -22,7 +22,7 @@ public class PlayerRotation : MonoBehaviour
 
 
         float angle = Quaternion.Angle(transform.rotation, toRotation);
-        Debug.Log(angle);
+        
 
         transform.LookAt(point);
     }
