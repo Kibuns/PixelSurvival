@@ -36,7 +36,7 @@ namespace StarterAssets
         [MenuItem(MenuRoot + "/Reinstall Dependencies", false)]
         static void ResetPackageChecker()
         {
-            PackageChecker.RemovePackageCheckerScriptingDefine();
+            //PackageChecker.RemovePackageCheckerScriptingDefine();
         }
 
 #if STARTER_ASSETS_PACKAGES_CHECKED

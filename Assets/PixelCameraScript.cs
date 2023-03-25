@@ -18,16 +18,12 @@ public class PixelCameraScript : MonoBehaviour
     private void Update()
     {
         transform.position = player.transform.position + new Vector3(-11, 14.8f, -11);
-    }
-
-    private void LateUpdate()
-    {
         // Calculate the position of the canvas camera in world space
         Vector3 cameraPosition = transform.position;
 
         // Calculate the position of the canvas camera in screen space
         Vector3 screenPosition = mainCamera.WorldToScreenPoint(cameraPosition);
-        
+
 
         // Round the screen space position to the nearest pixel
         Vector3 roundedScreenPosition = new Vector3(
@@ -45,5 +41,10 @@ public class PixelCameraScript : MonoBehaviour
 
         // Adjust the orthographic size to maintain the desired pixels per unit
         //_camera.m_Lens.OrthographicSize = Screen.height / (2 * pixelsPerUnit);
+    }
+
+    private void LateUpdate()
+    {
+
     }
 }
