@@ -5,18 +5,34 @@ using UnityEngine;
 public class MoveBullet : MonoBehaviour
 {
     public Vector3 direction;
-
     public int speed;
+    public float fadeInSeconds = 1;
+
+    private float time = 0;
+    private bool hasCollided = false;
+    private float initialIntensity;
+    private Light light;
     // Start is called before the first frame update
     void Start()
     {
         GetComponent<Rigidbody>().AddForce(direction * speed);
+        light = gameObject.GetComponentInChildren<Light>();
+        initialIntensity = light.intensity;
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        if(hasCollided)
+        {
+            Debug.Log(time);
+            time += Time.deltaTime;
+            light.intensity = (2 - (time / fadeInSeconds)*2) * initialIntensity;
+            if(time > fadeInSeconds)
+            {
+                Destroy(gameObject);
+            }
+        }
     }
 
     private void OnCollisionEnter(Collision col)
@@ -34,6 +50,15 @@ public class MoveBullet : MonoBehaviour
             //TODO: dirt splash when missing
 
         }
-        Destroy(gameObject);
+        EnterCollidedStage();
+
+    }
+
+    private void EnterCollidedStage()
+    {
+        hasCollided = true;
+        GetComponent<MeshRenderer>().enabled = false;
+        GetComponent<Collider>().enabled = false;
+        GetComponent<Rigidbody>().isKinematic = true;
     }
 }
