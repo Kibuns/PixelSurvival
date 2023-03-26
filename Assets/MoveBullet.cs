@@ -7,6 +7,7 @@ public class MoveBullet : MonoBehaviour
     public Vector3 direction;
     public int speed;
     public float fadeInSeconds = 1;
+    public float maxLifetime = 2;
 
     private float time = 0;
     private bool hasCollided = false;
@@ -25,7 +26,6 @@ public class MoveBullet : MonoBehaviour
     {
         if(hasCollided)
         {
-            Debug.Log(time);
             time += Time.deltaTime;
             light.intensity = (2 - (time / fadeInSeconds)*2) * initialIntensity;
             if(time > fadeInSeconds)
@@ -33,11 +33,17 @@ public class MoveBullet : MonoBehaviour
                 Destroy(gameObject);
             }
         }
+        else
+        {
+            time += Time.deltaTime;
+            if(time > maxLifetime) { Destroy(gameObject); }
+        }
     }
 
     private void OnCollisionEnter(Collision col)
     {
-        if(col.gameObject.tag == "Enemy")
+        time = 0;
+        if (col.gameObject.tag == "Enemy")
         {
             Debug.Log("enemy hit!");
             //TODO: damage enemy

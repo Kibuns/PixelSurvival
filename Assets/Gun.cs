@@ -27,7 +27,6 @@ public class Gun : MonoBehaviour
 
     public void Fire()
     {
-        Debug.Log("SHOOT!");
         RaycastHit hit;
 
         Vector3 fireDirection = (target.transform.position - transform.position).normalized;

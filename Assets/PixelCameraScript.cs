@@ -5,19 +5,44 @@ public class PixelCameraScript : MonoBehaviour
 {
     public float pixelsPerUnit = 32f;
     public Camera mainCamera;
-    public Transform player;
-    public Vector3 vec;
+    public Transform followObject;
+
+    public float rotationSpeed = 1f;
+    private float distance;
+    private float height;
 
     //private CinemachineVirtualCamera _camera;
 
     private void Start()
     {
-        //_camera = gameObject.GetComponent<CinemachineVirtualCamera>();
+        distance = Vector3.Distance(gameObject.transform.position, followObject.transform.position);
+        height = transform.position.y - followObject.position.y;
     }
 
     private void Update()
     {
-        transform.position = player.transform.position + new Vector3(-11, 14.8f, -11);
+        //PIVOT MECHANICS
+        // Calculate the pivot point position based on the followObject's position and rotation
+        Vector3 pivotPoint = followObject.position;
+
+        // Calculate the target position based on the pivot point, distance, and height
+        Vector3 targetPosition = pivotPoint - followObject.forward * distance;
+
+        // Move the gameObject to the target position
+        transform.position = targetPosition;
+
+        // Calculate the target rotation based on the direction from the gameObject to the pivot point
+        Vector3 lookDirection = pivotPoint - transform.position;
+        Quaternion targetRotation = Quaternion.LookRotation(lookDirection, Vector3.up);
+
+        // Apply the target rotation to the gameObject with rotation speed
+        transform.rotation = followObject.rotation;
+
+   
+
+
+
+
         // Calculate the position of the canvas camera in world space
         Vector3 cameraPosition = transform.position;
 
@@ -31,7 +56,6 @@ public class PixelCameraScript : MonoBehaviour
             Mathf.RoundToInt(screenPosition.y),
             screenPosition.z
         );
-        Debug.Log(roundedScreenPosition);
 
         // Convert the rounded screen space position back to world space
         Vector3 roundedCameraPosition = mainCamera.ScreenToWorldPoint(roundedScreenPosition);
