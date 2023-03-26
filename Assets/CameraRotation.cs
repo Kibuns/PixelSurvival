@@ -6,25 +6,54 @@ public class CameraRotation : MonoBehaviour
 {
     private PlayerControlls playerControlls;
 
+    [SerializeField] private float rotationDuration = 0.2f; // Duration of the rotation in seconds
+    private bool isRotating = false; // Flag to prevent multiple simultaneous rotations\
+    private List<int> values = new List<int> { 45, 135, 225, 315 };
+    private int currentIndex = 0;
+    private int selectedValue = 45;
+
     private void Awake()
     {
         playerControlls = new PlayerControlls();
     }
 
-    void Start()
-    {
-        
-    }
-
     // Update is called once per frame
     void Update()
     {
-        if (playerControlls.Player.Fire1.triggered)
+
+        // increment the index and wrap around to 0 if we reach the end of the list
+        
+        if (playerControlls.Player.E.triggered)
         {
-            Debug.Log("rotate");
-            //rotate the roation.y of the gameObject by +90
-            transform.eulerAngles = new Vector3(transform.eulerAngles.x, transform.eulerAngles.y + 45, transform.eulerAngles.z);
+            currentIndex = (currentIndex + 1) % values.Count;
+            Debug.Log(currentIndex);
+            selectedValue = values[currentIndex];
+            StartCoroutine(RotateCamera(Quaternion.Euler(transform.eulerAngles.x, selectedValue, transform.eulerAngles.z))); // Start coroutine to rotate camera by 45 degrees
         }
+        if (playerControlls.Player.Q.triggered)
+        {
+            currentIndex = (currentIndex - 1 + values.Count) % values.Count;
+            Debug.Log(currentIndex);
+            selectedValue = values[currentIndex];
+            StartCoroutine(RotateCamera(Quaternion.Euler(transform.eulerAngles.x, selectedValue, transform.eulerAngles.z))); // Start coroutine to rotate camera by 45 degrees
+        }
+    }
+
+    private IEnumerator RotateCamera(Quaternion targetRotation)
+    {
+        isRotating = true;
+        Quaternion startRotation = transform.rotation;
+        float elapsedTime = 0;
+
+        while (elapsedTime < rotationDuration)
+        {
+            transform.rotation = Quaternion.Slerp(startRotation, targetRotation, (elapsedTime / rotationDuration));
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+
+        transform.rotation = targetRotation; // Ensure final rotation is exact
+        isRotating = false;
     }
 
     private void OnEnable()

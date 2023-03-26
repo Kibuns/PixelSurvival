@@ -2023,6 +2023,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62f29ba7cd7334c428b79ce2c0751941, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rotationDuration: 0.2
 --- !u!4 &1109226666 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6105313468633250863, guid: 7ba58e1fcb8a8c54ab3dfe97a1b5ebe9, type: 3}
