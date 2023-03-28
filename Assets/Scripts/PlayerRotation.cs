@@ -9,7 +9,6 @@ public class PlayerRotation : MonoBehaviour
     public GameObject target;
     private Vector3 point;
     public float speed = 10;
-    private float t = 0.0f;
 
     private void Update()
     {
@@ -19,9 +18,6 @@ public class PlayerRotation : MonoBehaviour
         Vector3 direction = (point - transform.position).normalized;
         Debug.DrawRay(transform.position, direction);
         Quaternion toRotation = Quaternion.FromToRotation(transform.forward, direction);
-
-
-        float angle = Quaternion.Angle(transform.rotation, toRotation);
         
 
         transform.LookAt(point);

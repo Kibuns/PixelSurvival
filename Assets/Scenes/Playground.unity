@@ -2748,6 +2748,7 @@ GameObject:
   - component: {fileID: 1209274841}
   - component: {fileID: 1209274839}
   - component: {fileID: 1209274840}
+  - component: {fileID: 1209274842}
   m_Layer: 0
   m_Name: View Visualisation
   m_TagString: Untagged
@@ -2783,7 +2784,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 0}
+  - {fileID: 2100000, guid: 9cdbfb0adff2d5949b550a29d097165c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2820,6 +2821,32 @@ Transform:
   m_Father: {fileID: 1762682273}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1209274842
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1209274838}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c7d35c582e080a42959041e90bd06a7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  viewRadius: 43.31
+  viewAngle: 116
+  viewHeight: 1
+  targetMask:
+    serializedVersion: 2
+    m_Bits: 64
+  obstacleMask:
+    serializedVersion: 2
+    m_Bits: 128
+  visibleTargets: []
+  meshResolution: 1
+  edgeResolveIterations: 0
+  edgeDstThreshold: 0
+  viewMeshFilter: {fileID: 1209274839}
 --- !u!1001 &1221041499
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4095,14 +4122,14 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 795308726}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 4c7d35c582e080a42959041e90bd06a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  viewRadius: 12.78
-  viewAngle: 80
-  viewHeight: 1
+  viewRadius: 43.31
+  viewAngle: 116
+  viewHeight: 0
   targetMask:
     serializedVersion: 2
     m_Bits: 64
@@ -4111,8 +4138,8 @@ MonoBehaviour:
     m_Bits: 128
   visibleTargets: []
   meshResolution: 1
-  edgeResolveIterations: 4
-  edgeDstThreshold: 0.5
+  edgeResolveIterations: 0
+  edgeDstThreshold: 0
   viewMeshFilter: {fileID: 1209274839}
 --- !u!1 &1764214107
 GameObject:

@@ -12,13 +12,13 @@ public class MoveBullet : MonoBehaviour
     private float time = 0;
     private bool hasCollided = false;
     private float initialIntensity;
-    private Light light;
+    private Light bulletLight;
     // Start is called before the first frame update
     void Start()
     {
         GetComponent<Rigidbody>().AddForce(direction * speed);
-        light = gameObject.GetComponentInChildren<Light>();
-        initialIntensity = light.intensity;
+        bulletLight = gameObject.GetComponentInChildren<Light>();
+        initialIntensity = bulletLight.intensity;
     }
 
     // Update is called once per frame
@@ -27,7 +27,7 @@ public class MoveBullet : MonoBehaviour
         if(hasCollided)
         {
             time += Time.deltaTime;
-            light.intensity = (2 - (time / fadeInSeconds)*2) * initialIntensity;
+            bulletLight.intensity = (2 - (time / fadeInSeconds)*2) * initialIntensity;
             if(time > fadeInSeconds)
             {
                 Destroy(gameObject);

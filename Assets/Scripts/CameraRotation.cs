@@ -7,7 +7,6 @@ public class CameraRotation : MonoBehaviour
     private PlayerControlls playerControlls;
 
     [SerializeField] private float rotationDuration = 0.2f; // Duration of the rotation in seconds
-    private bool isRotating = false; // Flag to prevent multiple simultaneous rotations\
     private List<int> values = new List<int> { 45, 135, 225, 315 };
     private int currentIndex = 0;
     private int selectedValue = 45;
@@ -41,7 +40,6 @@ public class CameraRotation : MonoBehaviour
 
     private IEnumerator RotateCamera(Quaternion targetRotation)
     {
-        isRotating = true;
         Quaternion startRotation = transform.rotation;
         float elapsedTime = 0;
 
@@ -53,7 +51,6 @@ public class CameraRotation : MonoBehaviour
         }
 
         transform.rotation = targetRotation; // Ensure final rotation is exact
-        isRotating = false;
     }
 
     private void OnEnable()

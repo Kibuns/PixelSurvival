@@ -59,6 +59,7 @@ public class FieldOfView : MonoBehaviour
 		for (int i = 0; i < targetsInViewRadius.Length; i++)
 		{
 			Transform target = targetsInViewRadius[i].transform;
+            bool visible = false;
 			Vector3 dirToTarget = (target.position - centerPoint).normalized;
 			if (Vector3.Angle(transform.forward, dirToTarget) < viewAngle / 2)
 			{
@@ -66,9 +67,11 @@ public class FieldOfView : MonoBehaviour
 				if (!Physics.Raycast(centerPoint, dirToTarget, dstToTarget, obstacleMask))
 				{
 					visibleTargets.Add(target);
+                    visible = true;
 				}
 			}
-		}
+            target.gameObject.GetComponent<MeshRenderer>().enabled = visible;
+        }
 	}
 
 	void DrawFieldOfView()
@@ -164,13 +167,13 @@ public class FieldOfView : MonoBehaviour
 		Vector3 dir = DirFromAngle(globalAngle, true);
 		RaycastHit hit;
 
-		if (Physics.Raycast(centerPoint, dir, out hit, viewRadius, obstacleMask))
+		if (Physics.Raycast(transform.position, dir, out hit, viewRadius, obstacleMask))
 		{
 			return new ViewCastInfo(true, hit.point, hit.distance, globalAngle);
 		}
 		else
 		{
-			return new ViewCastInfo(false, centerPoint + dir * viewRadius, viewRadius, globalAngle);
+			return new ViewCastInfo(false, transform.position + dir * viewRadius, viewRadius, globalAngle);
 		}
 	}
 
