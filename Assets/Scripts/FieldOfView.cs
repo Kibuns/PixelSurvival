@@ -156,6 +156,10 @@ public class FieldOfView : MonoBehaviour
 				maxAngle = angle;
 				maxPoint = newViewCast.point;
 			}
+			if (i == 0 || i == edgeResolveIterations - 1)
+			{
+				EnableTargetMeshOnRaycast(angle);
+			}
 		}
 
 		return new EdgeInfo(minPoint, maxPoint);
@@ -174,6 +178,18 @@ public class FieldOfView : MonoBehaviour
 		else
 		{
 			return new ViewCastInfo(false, transform.position + dir * viewRadius, viewRadius, globalAngle);
+		}
+	}
+
+	void EnableTargetMeshOnRaycast(float globalAngle)
+	{
+		Vector3 dir = DirFromAngle(globalAngle, true);
+		RaycastHit hit;
+
+		if (Physics.Raycast(transform.position, dir, out hit, viewRadius, targetMask))
+		{
+			Debug.DrawRay(transform.position, dir, Color.green);
+			hit.collider.gameObject.GetComponent<MeshRenderer>().enabled = true;
 		}
 	}
 
